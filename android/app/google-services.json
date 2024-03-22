@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201122316767",
+    "project_id": "shouper-bf5f2",
+    "storage_bucket": "shouper-bf5f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201122316767:android:286fb60ad07b160bc1046a",
+        "android_client_info": {
+          "package_name": "com.example.shouper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmNTkxTi5yxpBGo5GKk3RuHrgCKMfZ_vM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
