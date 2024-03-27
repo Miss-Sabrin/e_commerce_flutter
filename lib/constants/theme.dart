@@ -36,7 +36,18 @@ ThemeData themeData=ThemeData(
       disabledBackgroundColor: Colors.grey
     )
     
+  ),
+canvasColor: Colors.red,
+primarySwatch: Colors.red,
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.white,
+    elevation: 0.0,
+    toolbarTextStyle: TextStyle(
+      color: Colors.black
+    ),
+    iconTheme: IconThemeData(color: Colors.black)
   )
+
 );
 
 OutlineInputBorder outlineInputBorder=const OutlineInputBorder(

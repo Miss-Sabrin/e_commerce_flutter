@@ -4,7 +4,7 @@ import 'package:shouper/constants/constants.dart';
 import 'package:shouper/constants/routes.dart';
 import 'package:shouper/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:shouper/screans/auth_ui/singup/sing_up.dart';
-import 'package:shouper/screans/home/home.dart';
+import 'package:shouper/screans/custom_bottom/custom_bottom_bar.dart';
 import 'package:shouper/widgets/primaray_button.dart';
 import 'package:shouper/widgets/top_title/top_title.dart';
 
@@ -36,6 +36,7 @@ class _LoginState extends State<Login> {
              padding: const EdgeInsets.all(12.0),
              child:
               TextField(
+                controller: email,
                   decoration: InputDecoration(
                     hintText: 'email',
                     prefixIcon: Icon(Icons.message_outlined,
@@ -48,6 +49,7 @@ class _LoginState extends State<Login> {
              padding: const EdgeInsets.all(12.0),
              child:
               TextField(
+                controller: password,
                 obscureText: isShowPassword,
                   decoration: InputDecoration(
                     hintText: 'password',
@@ -77,7 +79,7 @@ class _LoginState extends State<Login> {
                 if(isValidated){
                   bool  isLogin=await FirebaseAuthHelper.instance.login(email.text,password.text,context);
                   if(isLogin){
-                    Routes.instance.pushAndRemoveUntil(widget: Home(), context: context);
+                    Routes.instance.pushAndRemoveUntil(widget: CusttomBottomBar(), context: context);
                   }
                 }
               },

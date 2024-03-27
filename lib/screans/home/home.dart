@@ -1,7 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shouper/constants/routes.dart';
 import 'package:shouper/firebase_helper/fairebase_fiestore/firebase_fire.dart';
 import 'package:shouper/models/catrgoy_model.dart';
 import 'package:shouper/models/product_model.dart';
+import 'package:shouper/provider/app_provider.dart';
+import 'package:shouper/screans/category_view/category_view.dart';
+import 'package:shouper/screans/product_detail/product_detail.dart';
 import 'package:shouper/widgets/top_title/top_title.dart';
 
 class Home extends StatefulWidget {
@@ -18,7 +24,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-
+AppProvider appProvider=Provider.of<AppProvider>(context,listen: false);
+appProvider.getUserInfoFirebase();
     // TODO: implement initState
     getCategories();
     super.initState();
@@ -31,6 +38,7 @@ class _HomeState extends State<Home> {
     });
     categoryList=await FirebaseFireHelper.instance.getCategories();
     producModeltList=await FirebaseFireHelper.instance.getBestProduct();
+    producModeltList.shuffle();
 
     setState(() {
       isLoading=false;
@@ -94,16 +102,22 @@ class _HomeState extends State<Home> {
                 .map(
                   (e) =>  Padding(
                     padding: const EdgeInsets.only(left: 8),
-                    child: Card(
-                      color: Colors.white,
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      child: SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Image.network(e.image)
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: (){
+                        Routes.instance.push(widget: CategoriesView(categoriestModel: e), context: context);
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Image.network(e.image)
+                        ),
                       ),
                     ),
                   ),
@@ -134,12 +148,14 @@ class _HomeState extends State<Home> {
                padding: const EdgeInsets.all(8.0),
                child: GridView.builder(
                 primary: false,
-                padding: EdgeInsets.zero,
+                padding: EdgeInsets.only(bottom: 50),
                shrinkWrap: true,
                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                    crossAxisCount: 2,
-                   mainAxisSpacing:20,
-                   crossAxisSpacing: 20
+                   mainAxisSpacing:18,
+                   crossAxisSpacing: 20,
+                   childAspectRatio: 0.7,
+                   
                  ),
                  itemCount: producModeltList.length,
                  itemBuilder: (BuildContext context, int index) {
@@ -151,11 +167,12 @@ class _HomeState extends State<Home> {
                     ),
                     // color: Colors.red.shade100,
                     child: Column(children: [
+                      SizedBox(height: 12,),
                       Image.network(
                         singleProduct.image,
-                        scale: 10,
-                        height: 60,
-                        width: 60,
+                       // scale: 10,
+                        height: 100,
+                        width: 100,
                         ),
                       const SizedBox(height: 12,),
                       Text(singleProduct.name,
@@ -166,7 +183,11 @@ class _HomeState extends State<Home> {
                         height: 45,
                         width: 100,
                         child: OutlinedButton(
-                          onPressed: (){}, 
+                          onPressed: (){
+                             Routes.instance.push(widget: ProductDetail(singleProduct: singleProduct), context: context);
+
+
+                          }, 
                           
                           child: Text("Bay")),
                       )
@@ -179,6 +200,8 @@ class _HomeState extends State<Home> {
                  },
                ),
              ),
+
+             const SizedBox(height: 12,),
         
         
           

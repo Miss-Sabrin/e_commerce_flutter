@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shouper/constants/constants.dart';
+import 'package:shouper/models/user_models.dart';
 
 class FirebaseAuthHelper{
  static FirebaseAuthHelper instance=FirebaseAuthHelper();
   final FirebaseAuth _auth=FirebaseAuth.instance;
+  //todo this down code as account page
+  final FirebaseFirestore  _firestore=FirebaseFirestore.instance;
+  ////todo into ku ekyahy
   Stream<User?> get getAuthCnahge=> _auth.authStateChanges();
 
   Future<bool> login(
@@ -31,11 +36,22 @@ class FirebaseAuthHelper{
 
   
   Future<bool> singUp(
-    String email,String password,BuildContext context
+   String name, String email,String password,BuildContext context
   )async{
     try{
       showAboutDialog(context: context);
-    await _auth.createUserWithEmailAndPassword(email: email, password: password);
+   UserCredential userCredential =await _auth
+   .createUserWithEmailAndPassword(email: email, password: password);
+   UserModel userModel=UserModel(
+    id: userCredential.user!.uid,name: name,email: email,image: null,
+   );
+
+
+_firestore.collection("users").doc(userModel.id).set(userModel.toJson());
+
+
+
+
     Navigator.of(context).pop();
     return true;
 
@@ -46,5 +62,11 @@ class FirebaseAuthHelper{
     return false;
     
   }
+
+  //todo logout page 
+  }
+  void signOut() async{
+   await _auth.signOut();
+
   }
 }

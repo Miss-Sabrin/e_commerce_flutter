@@ -16,6 +16,7 @@ class ProductModel {
     double price;
     String status;
     String image;
+    int? qty;
 
     ProductModel({
       
@@ -25,7 +26,9 @@ class ProductModel {
         required this.isFavrite,
         required this.price,
         required this.status,
-        required this.image
+        required this.image,
+        this.qty
+
     });
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -35,7 +38,8 @@ class ProductModel {
         isFavrite: false,
         price: double.parse( json["price"].toString()),
         status: json["status"],
-        image:json["image"]
+        image:json["image"],
+        qty: json['qty']
     );
 
     Map<String, dynamic> toJson() => {
@@ -46,5 +50,21 @@ class ProductModel {
         "price": price,
         "status": status,
         "image":image,
+        "qty":qty,
     };
+
+    @override
+    ProductModel copyWith({
+      int?   qty,
+    })=>
+    ProductModel(
+      id: id,
+       name: name,
+        description: description,
+         isFavrite: isFavrite, 
+         price:  price,
+         qty: qty?? this.qty,
+          status: status, 
+          image: image
+          );
 }

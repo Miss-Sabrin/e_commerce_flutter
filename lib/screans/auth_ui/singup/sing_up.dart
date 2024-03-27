@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shouper/constants/constants.dart';
 import 'package:shouper/constants/routes.dart';
 import 'package:shouper/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
-import 'package:shouper/screans/home/home.dart';
+import 'package:shouper/screans/custom_bottom/custom_bottom_bar.dart';
 import 'package:shouper/widgets/primaray_button.dart';
 import 'package:shouper/widgets/top_title/top_title.dart';
 
@@ -114,12 +114,12 @@ class _SingUpState extends State<SingUp> {
               onPressed: () async{
                  bool isValidated=  singUpValidation(email.text, password.text,phone.text, name.text);
                 if(isValidated){
-                  bool  isLogin=await FirebaseAuthHelper.instance.singUp(email.text,password.text ,context);
+                  bool  isLogin=await FirebaseAuthHelper.instance.singUp(email.text,password.text, name.text,context);
                   if(isLogin){
-                    Routes.instance.pushAndRemoveUntil(widget: Home(), context: context);
+                    Routes.instance.pushAndRemoveUntil(widget: CusttomBottomBar(), context: context);
                   }
                 }
-                //Routes.instance.pushAndRemoveUntil(widget: Home(), context: context);
+                //Routes.instance.pushAndRemoveUntil(widget: CusttomBottomBar(), context: context);
               },
               ),
            ),
